@@ -470,38 +470,3 @@ WHERE ((table_schema = 'gold'   AND table_name = 'mv_margem_hospitalar')
     OR (table_schema = 'silver' AND table_name IN ('glosas', 'faturamento', 'internacoes')))
   AND (column_name LIKE '%paciente%' OR column_name IN ('nome', 'email', 'data_nascimento', 'cidade', 'sexo'))
 ORDER BY table_schema, table_name, column_name;
-
--- COMMAND ----------
-
--- MAGIC %md-sandbox
--- MAGIC ## E. Exercício para o aluno
--- MAGIC
--- MAGIC <div style="border-left: 4px solid #d97706; background: #fffbeb; padding: 14px 18px; border-radius: 4px; margin: 16px 0;">
--- MAGIC   <strong style="display:block; color:#92400e; margin-bottom:6px; font-size: 1.1em;">Sua tarefa</strong>
--- MAGIC   <div style="color:#333;">
--- MAGIC     <p style="margin: 6px 0;">Crie um <strong>benchmark B6</strong>: <em>"Qual foi a receita líquida da Coopermed entre agosto e outubro de 2026?"</em>. Use a consulta abaixo para obter a resposta esperada (troque a operadora para criar outros benchmarks) e rode os benchmarks de novo. <strong>O Agent acertou? O SQL gerado usou a Metric View?</strong></p>
--- MAGIC   </div>
--- MAGIC </div>
--- MAGIC
--- MAGIC <details>
--- MAGIC   <summary style="cursor: pointer; list-style: none; user-select: none;">
--- MAGIC     <div style="border-left: 4px solid #009688; background: #f0faf9; padding: 16px 20px; border-radius: 4px; margin: 16px 0">
--- MAGIC       <div style="display: flex; align-items: center; gap: 12px">
--- MAGIC         <span style="font-size: 20px;">&#x25B6;</span>
--- MAGIC         <strong style="color: #00695c; font-size: 1.1em;">Expandir para ver a resposta</strong>
--- MAGIC       </div>
--- MAGIC     </div>
--- MAGIC   </summary>
--- MAGIC   <div style="border-left: 4px solid #009688; background: #f0faf9; padding: 0 20px 16px 20px; border-radius: 0 0 4px 4px; margin: -16px 0 16px 0">
--- MAGIC     <div style="color: #333; line-height: 1.7;">
--- MAGIC <p>A resposta esperada do B6 é <strong>R$ 10.661.400,00</strong> de receita líquida da Coopermed entre ago e out/2026.</p><p>O SQL gerado pelo Agent deve usar <code>MEASURE(receita_liquida)</code> na <code>mv_margem_hospitalar</code>, com filtro de operadora e de período. Se ele somar colunas das tabelas Silver, revise as descrições e o SQL de exemplo 1, que ensina a usar a Metric View.</p>
--- MAGIC     </div>
--- MAGIC   </div>
--- MAGIC </details>
-
--- COMMAND ----------
-
-SELECT MEASURE(receita_liquida) AS receita_liquida
-FROM hospital_margin_demo.gold.mv_margem_hospitalar
-WHERE operadora = 'Coopermed'                          -- troque aqui
-  AND mes_competencia >= DATE'2026-08-01';

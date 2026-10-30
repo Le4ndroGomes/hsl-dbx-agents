@@ -401,7 +401,7 @@ ORDER BY unidade, periodo;
 -- MAGIC   mantenha os títulos *Definição* e *Uso no negócio* com a formatação de título do editor.
 -- MAGIC - Use a menção **`@`** do editor para ligar cada ativo (tabelas, Metric View) e as outras Pages.
 -- MAGIC   É isso que os faz aparecer como ativos relacionados e permite navegar de uma Page para outra.
--- MAGIC - **Publique** as cinco Pages deste roteiro (e a Page 6, se fizer o exercício). Rascunhos têm prioridade menor nas respostas do Genie.
+-- MAGIC - **Publique** as cinco Pages deste roteiro. Rascunhos têm prioridade menor nas respostas do Genie.
 -- MAGIC - Os valores de "Referência atual" vêm das conferências SQL deste notebook (10.000 internações).
 -- MAGIC   Se você mudar o volume no notebook 01, rode as conferências de novo e atualize os números.
 
@@ -419,43 +419,3 @@ FROM hospital_margin_demo.information_schema.tables
 WHERE (table_schema = 'gold'   AND table_name IN ('mv_margem_hospitalar', 'fato_margem_hospitalar', 'resumo_financeiro_mensal', 'resumo_operadoras'))
    OR (table_schema = 'silver' AND table_name IN ('glosas', 'faturamento', 'internacoes', 'custos'))
 ORDER BY table_schema, table_name;
-
--- COMMAND ----------
-
--- MAGIC %md-sandbox
--- MAGIC ## E. Exercício para o aluno
--- MAGIC
--- MAGIC <div style="border-left: 4px solid #d97706; background: #fffbeb; padding: 14px 18px; border-radius: 4px; margin: 16px 0;">
--- MAGIC   <strong style="display:block; color:#92400e; margin-bottom:6px; font-size: 1.1em;">Sua tarefa</strong>
--- MAGIC   <div style="color:#333;">
--- MAGIC     <p style="margin: 6px 0;">Escreva uma <strong>Page 6: Receita Líquida</strong>, seguindo o mesmo modelo (Domínio, Nome, Responsável, Sinônimos, Descrição, Corpo, Ativos relacionados). Use a consulta abaixo para obter a "Referência atual" e cite a <code>@mv_margem_hospitalar</code> e a <code>@Taxa de Glosa</code> no corpo.</p>
--- MAGIC     <p style="margin: 6px 0;"><strong>Pergunta para discussão:</strong> por que a Page 3 (Taxa de Glosa de OPME) precisa existir, se já temos a Page 2 (Taxa de Glosa)?</p>
--- MAGIC   </div>
--- MAGIC </div>
--- MAGIC
--- MAGIC <details>
--- MAGIC   <summary style="cursor: pointer; list-style: none; user-select: none;">
--- MAGIC     <div style="border-left: 4px solid #009688; background: #f0faf9; padding: 16px 20px; border-radius: 4px; margin: 16px 0">
--- MAGIC       <div style="display: flex; align-items: center; gap: 12px">
--- MAGIC         <span style="font-size: 20px;">&#x25B6;</span>
--- MAGIC         <strong style="color: #00695c; font-size: 1.1em;">Expandir para ver a resposta</strong>
--- MAGIC       </div>
--- MAGIC     </div>
--- MAGIC   </summary>
--- MAGIC   <div style="border-left: 4px solid #009688; background: #f0faf9; padding: 0 20px 16px 20px; border-radius: 0 0 4px 4px; margin: -16px 0 16px 0">
--- MAGIC     <div style="color: #333; line-height: 1.7;">
--- MAGIC <p><strong>Page 6 (referência atual):</strong> receita líquida de R$ 126.373.450,00 no período Base (9 meses) e R$ 56.207.100,00 na deterioração (3 meses), ou seja, receita bruta menos glosas.</p><p><strong>Discussão:</strong> a Taxa de Glosa (Page 2) é calculada por internação e mostra <em>quem</em> glosa mais. A Taxa de Glosa de OPME (Page 3) precisa do nível de item (<code>tipo_item</code>), que a Metric View não tem. Sem a Page 3, ninguém (nem o Genie) saberia a fórmula oficial que mostra os 60% de glosa de OPME da Aurora Seguros.</p>
--- MAGIC     </div>
--- MAGIC   </div>
--- MAGIC </details>
-
--- COMMAND ----------
-
-SELECT
-    periodo,
-    MEASURE(receita_bruta)    AS receita_bruta,
-    MEASURE(glosas)           AS glosas,
-    MEASURE(receita_liquida)  AS receita_liquida
-FROM hospital_margin_demo.gold.mv_margem_hospitalar
-GROUP BY ALL
-ORDER BY periodo;

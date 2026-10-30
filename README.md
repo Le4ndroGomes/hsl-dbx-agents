@@ -182,18 +182,14 @@ Ele não substitui o Genie One: é curado para um público e um problema, com in
 **Achado principal:** recuperar só a glosa por falta de autorização de OPME (R$ 1,49 mi) levaria a margem de 16,9% para
 19,1%, cerca de metade da margem perdida.
 
-**Exercício:** crie o benchmark B6 (receita líquida da Coopermed em ago–out/2026). A resposta esperada é
-R$ 10.661.400,00.
-
-Os valores de B1 a B6 valem para 10.000 internações (volume padrão deste README).
+Os valores de B1 a B5 valem para 10.000 internações (volume padrão deste README).
 
 ## Padrão visual
 
 Os notebooks seguem o padrão visual das sessões da Databricks Academy:
 
 - logo `db-academy.png` na primeira célula de cada notebook;
-- callouts: vermelho (*Selecione a computação*), âmbar (*Pré-requisito* e *Sua tarefa*), verde (*O que observar* e *Resposta*) e azul (*Observação*);
-- respostas de exercício em bloco recolhível (*Expandir para ver a resposta*);
+- callouts: vermelho (*Selecione a computação*), âmbar (*Pré-requisito* e *Atenção*), verde (*O que observar* e *Resposta*) e azul (*Observação*);
 - tabelas com cabeçalho escuro (`#1B3139`);
 - diagrama de arquitetura em Mermaid no notebook 01 (carrega a biblioteca pela internet).
 
